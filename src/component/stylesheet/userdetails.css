@@ -1,0 +1,44 @@
+.user-details-conatiner{
+    height: 15rem;
+    background-color: #fff;
+    width: 100% !important;
+    box-shadow: 12px 12px 8px rgba(0, 0, 0, 0.1),
+    inset 12px 12px 8px #fff
+    ;
+}
+.user-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.dev-auth{
+    margin-top: 30px;
+}
+.key-details{
+ display: flex;
+}
+.key{
+    border-bottom: 2px solid #000;
+    height: 30px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.user-right{
+    position: relative;
+}
+.balance-detail{
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    transform: translate(-50%,-90%);
+}
+.balance{
+text-align: center;
+}
+.recharge-btn{
+    margin-top: 10px;
+    height: 30px;
+    width: 130px;
+}

@@ -1,0 +1,39 @@
+.service-conatiner{
+    margin-top: 20px;
+    width: 100% !important;
+}
+.title{
+    margin-bottom: 15px;
+}
+.service-item{
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 12px 12px 8px rgba(0, 0, 0, 0.1),
+    inset 12px 12px 8px #fff
+    ;
+}
+.item-img{
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+.desc h4{
+    font-size: 18px;
+    font-weight: 500;
+    color: #242424;
+}
+.desc p{
+    color: rgba(0,0,0,.7);
+}
+.item-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.item-link a{
+    text-decoration: none;
+}

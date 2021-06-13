@@ -1,0 +1,324 @@
+.sms-container{
+    display: flex;
+    flex-direction: row;
+}
+.msg-container{
+    /* width: 75%; */
+    width: 100%;
+    background-color: #fff;
+    border:2px solid #edebe9 ;
+}
+.recipient{
+    display: flex;
+    /* flex-direction: row; */
+    justify-items: center;
+    flex-wrap: wrap;
+    padding:10px 5px 10px 5px;
+    border-bottom:2px solid #edebe9;
+}
+
+.recipient .to{
+    min-width: 52px;
+    height: 32px;
+    line-height: 32px;
+    background-color: #0078d4;
+    font-weight: 600;
+    border-radius: 2px;
+    cursor: pointer;
+    border-color: transparent;
+    text-align: center;
+    padding: 0px 4px;
+    color: #ffffff;
+}
+.recipient .to:hover{
+    background-color: #0078d4;
+}
+.recipient .num-group{
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    height: 100%;
+    width: calc(100% - 120px);
+}
+.recipient .num-group input{
+    padding:10px 5px 10px 5px;
+    border: transparent;
+    width: 100%;
+    outline: transparent;
+}
+
+.recipient .tag{
+    padding: .2rem 1rem;
+    border: 1px solid #0078d4;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    background:  #106ebe;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.recipient .tag:hover{
+    background: #0078d4;
+}
+
+/* .tag i{
+    font-size: 16px;
+    margin-left: 5px;
+    background-color: #000;
+    border: 20px;
+} */
+.delete{
+    background: #0078d4;
+    border-radius: 30px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+}
+
+
+
+.sender{
+    display: flex;
+    /* flex-direction: row; */
+    justify-items: center;
+    padding:10px 5px 10px 5px;
+    border-bottom:2px solid #edebe9;
+}
+.sender .num-group{
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    height: 100%;
+    width: calc(100% - 32px);
+}
+.sender .num-group input{
+    padding:10px 5px 10px 5px;
+    border: transparent;
+    width: calc(100% - 32px);
+    outline: transparent;
+}
+.msg-body{
+    border-bottom:2px solid #edebe9;
+    padding: 20px;
+}
+.msg{
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 40vh;
+    resize: none;
+}
+.send-area{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    padding:10px 5px 10px 5px;
+    border-bottom:2px solid #edebe9;  
+}
+.send-btn{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-width: 80px;
+    height: 32px;
+    color: #ffffff;
+    border-radius: 2px;
+    cursor: pointer;
+    border-color: transparent;
+    background-color: #106ebe;
+    text-align: center;
+}
+.send-btn:hover{
+    background-color: #106ebe;
+}
+.btn1{
+    min-width: 60%;
+    height: 100%;
+    background-color: #0078d4;
+    font-size: 14px;
+    padding: 4px;
+    border-radius: 2px;
+}
+.btn1:hover{
+    background-color: #106ebe;
+}
+.seperator{
+    width: 1%;
+    height: 18px;
+    background-color: #fff;
+}
+.btn2{
+    min-width: 38%;
+    height: 100%;
+    background-color: #106ebe;  
+    font-size: 14px;
+    padding: 4px;
+    border-radius: 2px;
+}
+.btn2:hover{
+    background-color: #0078d4;
+}
+.char{
+    margin-left: 10px;
+    font-weight: 400;
+    color: gray;
+}
+.send-options{
+    position: absolute;
+    bottom: 33px;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #fff;
+    min-width: 180px;
+    height: 72px;
+    color: #000000a1;
+}
+.options{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    padding: 0px 8px 0px 4px;
+}
+.options li{
+    width: 100%;
+    height: 36px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    list-style-type: none;
+    padding-left: 8px;
+}
+.options li:hover{
+    background-color: #edebe9;
+
+}
+.schedule{
+    border: 2px solid #0078d4;
+    outline: none;
+}
+.tick{
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    color: #0078d4;
+}
+.all-icons .font-icon-list .font-icon-detail .tick i{
+    font-size: 70%;
+}
+
+/* Preview */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
+  
+#wrapper{
+    
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+.phone {
+  border: 40px solid #003d8f;
+  border-width: 55px 7px;
+  border-radius: 40px;
+  width: 15rem;
+  height: 30rem;
+  /* margin: 20px auto; */
+  overflow: hidden;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+ -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadein 2s; /* Firefox < 16 */
+      -ms-animation: fadein 2s; /* Internet Explorer */
+       -o-animation: fadein 2s; /* Opera < 12.1 */
+          animation: fadein 2s;
+}
+
+.phone iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+  background-color:#000;
+}
+
+
+/*  Front View */
+.phone.view_2 {
+  -webkit-transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+          transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  box-shadow: inset 0px 3px 0 #003d8f, inset 0px 4px 0 #003d8f, inset 0px 5px 0 #003d8f, inset 0px 7px 0 #003d8f, inset 0px 10px 20px #003d8f;
+}
+
+
+@-webkit-keyframes rotate {
+
+  0%{-webkit-transform: rotateX(50deg) rotateY(0deg) rotateZ(-30deg);}
+  50%{-webkit-transform: rotateX(50deg) rotateY(0deg) rotateZ(-40deg);}
+  100%{-webkit-transform: rotateX(50deg) rotateY(0deg) rotateZ(-30deg);}
+}
+
+
+
+
+@media (max-width:900px) {
+#wrapper {
+  -webkit-transform: scale(0.8, 0.8);
+          transform: scale(0.8, 0.8);
+}
+}
+
+@media (max-width:700px) {
+#wrapper {
+  -webkit-transform: scale(0.6, 0.6);
+          transform: scale(0.6, 0.6);
+}
+.phone { margin: 0 0 0 -70px; }
+}
+
+@media (max-width:500px) {
+#wrapper {
+  -webkit-transform: scale(0.4, 0.4);
+          transform: scale(0.4, 0.4);
+}
+}
+
+/* Fade In Animation */
+
+@keyframes fadein {
+from { opacity: 0; }
+to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+from { opacity: 0; }
+to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+from { opacity: 0; }
+to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+from { opacity: 0; }
+to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+from { opacity: 0; }
+to   { opacity: 1; }
+}
+

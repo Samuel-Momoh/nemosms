@@ -1,0 +1,31 @@
+.right-container{
+margin: 0 !important;
+}
+.right-container{
+    float: right ;
+    width: calc(100% - 50px);
+    background-color: #eee;
+    height: 100%;
+ padding-right: 0 !important;
+ padding-left: 0 !important;
+}
+.right-body{
+    box-sizing: border-box !important;
+    margin-top: 30px;
+    width: 100%;
+    background-color: transparent;
+}
+.scroll-margin{
+    height: calc(100vh - 80px);
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+@media(max-width: 700px){
+    .right-container{
+        width: 100%;
+     }
+     .scroll-margin{
+        padding-bottom: 30px;
+     }
+   }

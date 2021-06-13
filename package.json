@@ -1,0 +1,71 @@
+{
+  "name": "bulksms",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.3.16",
+    "@fortawesome/react-native-fontawesome": "^0.2.6",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "animejs": "^3.2.1",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "chartist": "^0.11.4",
+    "ckeditor4-react": "^1.4.0",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "jquery": "^1.9.1",
+    "popper.js": "^1.16.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-animejs": "^0.5.6",
+    "react-bootstrap": "^1.5.2",
+    "react-chartist": "^0.14.4",
+    "react-crud-table": "^0.3.0",
+    "react-datetime-picker": "^3.2.0",
+    "react-dom": "^17.0.2",
+    "react-interswitch": "^1.0.3",
+    "react-multi-email": "^0.5.3",
+    "react-named-router": "^0.8.2",
+    "react-notification-alert": "0.0.13",
+    "react-notifications": "^1.7.2",
+    "react-paypal-express-checkout": "^1.0.5",
+    "react-redux": "^7.2.4",
+    "react-remita": "^1.0.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-sticky-header": "^0.2.0",
+    "reactstrap": "^8.9.0",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.2.0",
+    "typescript": "^4.2.4",
+    "web-vitals": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
