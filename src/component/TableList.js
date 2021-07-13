@@ -1,15 +1,14 @@
 
 // react-bootstrap components
 import {
-  Card,
-  Table,
   Container,
-  Row,
-  Col,
 } from "react-bootstrap";
+import "./stylesheet/report.css"
 import { useQuery} from '@apollo/client';
 import {useHistory} from "react-router-dom";
 import { MESSAGES } from "../queries";
+import ReactTable from 'react-table-6'
+import 'react-table-6/react-table.css'
 
 function TableList() {
   // Message Delivery report
@@ -18,60 +17,68 @@ function TableList() {
   if(queryData){
     // Change to fetch new data everytime before refresh minutes can work
    
-    console.log(queryData)
+    console.log(queryData.messages.edges)
   }
   if(queryLoading){
     return(
-      <p>loading.........</p>
+      <>
+      <Container fluid className="inapp-preloader-body">
+            <div className="inapp-preloader-container">
+            <div class="loadingio-spinner-ellipsis-k08wjsja6k"><div class="ldio-z383kca01p">
+      <div></div><div></div><div></div><div></div><div></div>
+      </div></div>
+          </div>
+      </Container>
+      </>
     )
   }
   if(queryError){
  history.push('/auth/signin')
   }
+
+  // React Table 6 Setup
+  const columns = [
+    {
+      Header: 'Sender Name',
+      accessor: 'sender'
+    }, 
+    {
+    Header: 'Date Sent',
+    accessor: 'createdAt' // String-based value accessors!
+  }, 
+  {
+    Header: 'Date Recieved',
+    accessor: 'createdAt'
+  }, 
+  {
+    Header: 'Reciever',
+    accessor: 'reciever'
+  }, 
+  {
+    Header: 'Status',
+    accessor: 'schedule'
+  },
+  {
+    Header: 'Cost',
+    accessor: 'text'
+  },
+]
+
   return (
     <>
       <Container fluid>
-        <Row>
-          <Col md="12">
-            <Card className="strpied-tabled-with-hover">
-              <Card.Header>
-                <Card.Title as="h4">Message Delivery</Card.Title>
-                <p className="card-category">
-                  This table include all messages as well as Api calls
-                </p>
-              </Card.Header>
-              <Card.Body className="table-full-width table-responsive px-0">
-                <Table className="table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th className="border-0">ID</th>
-                      {/* <th className="border-0">Reciever</th> */}
-                      <th className="border-0">Cost</th>
-                      <th className="border-0">Schedule</th>
-                      <th className="border-0">Date</th>
-                      <th className="border-0">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {queryData.messages.edges.map((message, key) => {
-                       return(
-                        <tr>
-                        <td>{key}</td>
-                        {/* <td>{message.reciever}</td> */}
-                        <td>1 Unit</td>
-                        <td>{message.schedule}</td>
-                        <td>{message.createdAt}</td>
-                        <td>Delivered</td>
-                      </tr>
-                       )
-                      
-                      })}
-                  </tbody>
-                </Table>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+
+        <ReactTable
+    data={queryData.messages.edges}
+    resolveData={data => data.map(row => row)}
+    columns={columns}
+    defaultPageSize={10}
+    sortable={true}
+    multiSort={true}
+    resizable={true}
+    className={"delivery_report"}
+
+  />
       </Container>
     </>
   );

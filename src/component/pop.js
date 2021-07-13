@@ -1,16 +1,16 @@
 import React from 'react'
 import './stylesheet/pop.css';
 import {NavLink} from "react-router-dom";
-// import anime from 'animejs/lib/anime.es.js';
+import { useSelector, useDispatch } from "react-redux";
+import { togglepopMenue } from "../actions/";
 function Pop({ routes }) {
-    const popToggle = () => {
-        document.getElementById('hidden-menu').classList.toggle("hidnav");
-      };
+  const popState = useSelector(state => state.popMenue);
+  const dispatch = useDispatch()
+  
     return (
       <>
                  <div className="pop-sidebar">
-                    <div className="hidden-menu hidnav" id="hidden-menu"> 
-                    {/* {hiddnav()} */}
+                    <div className="hidden-menu"  style={{display: popState ? null:'none' }}> 
                     {routes.slice(4,6).map((prop, key) => {
                         if (!prop.redirect)
                           return (
@@ -43,7 +43,13 @@ function Pop({ routes }) {
                       })}
 
                     </div>
-                    <div className="constant" onClick={popToggle}>
+                    <div className="constant" 
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      dispatch(togglepopMenue())
+                     
+                    }}
+                    >
                         <i className="fa fa-plus"></i>
                     </div>
                  </div>

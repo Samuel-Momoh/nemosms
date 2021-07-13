@@ -1,11 +1,10 @@
 import React,{useState} from 'react';
-
 import "./stylesheet/light-bootstrap-dashboard-react.css";
 import "./stylesheet/demo.css";
 import { useSelector, useDispatch } from "react-redux";
-import { increment } from "../actions/";
+import { increment,toggleOptions } from "../actions/";
 import DateTimePicker from 'react-datetime-picker';
-import {Card,Modal,Container,Row,Col,} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 import { ReactMultiEmail } from 'react-multi-email';
 import 'react-multi-email/style.css';
 import './stylesheet/sms.css';
@@ -15,15 +14,15 @@ import { SEND_MESSAGE } from "../queries";
 const Sms = () => {
 
   const [sendMessage,{ loading: mutationLoading, error: mutationError,data: mutationData },] = useMutation(SEND_MESSAGE,{errorPolicy: 'all'});
-if(mutationError){
-  console.log("error")
-}
+
     const counter = useSelector(state => state.smscounter);
+    const options = useSelector(state => state.optionsSwitch);
     const dispatch = useDispatch()
-    const [options, setOption] = useState(false)
     const [date, setDate] = useState(new Date())
     const [scheduleModal,setScheduleModel] = useState(false)
     const [numbers, addNumber] = useState([])
+    const [senderTitle,addSenderTitle] = useState([''])
+    const [Editing,setEditing] = useState(false)
     const notificationAlertRef = React.useRef(null);
     const myStyle = {
       // borderBottom:"2px solid #edebe9",
@@ -66,7 +65,7 @@ if(mutationError){
   const notify = () => {
     var options = {};
     options = {
-      place: "br",
+      place: 'br',
       message: (
         <div>
           <div>
@@ -77,16 +76,31 @@ if(mutationError){
       ),
       type: "primary",
       icon: "nc-icon nc-bell-55",
-      autoDismiss: 100,
+      autoDismiss: 10,
     };
     notificationAlertRef.current.notificationAlert(options);
   };
+  if(mutationError){
+    console.log("error")
+  }
+  if(mutationData){
+    notify();
+  }
         return (
-          <div className="sms-container">
+          <div className="sms-container" >
                 <div className='msg-container'> 
                   <div className='recipient' id='recipient'>
-                  <label className='to'  data-name='label'> Import</label>
-                  <div className='num-group'> <input type="text" placeholder="Enter sender numbers...." id="sender" /></div>
+                  <label className='to'  data-name='label'> Sender</label>
+                  <div className='num-group'>
+                    <div className="tag" style={{display: Editing? null:'none'}} onClick={()=> setEditing(false)}>{senderTitle}</div>
+                     <input type="text" placeholder="Enter sender numbers...." id="sender" 
+                     style={{display: Editing? 'none':null}}
+                     onChange={(e)=>{
+                      addSenderTitle(e.target.value)
+                     }}
+                     onBlur={()=>setEditing(true)}
+                     />
+                     </div>
                   </div>
                   <div className='sender'>
                   <ReactMultiEmail
@@ -116,76 +130,33 @@ if(mutationError){
                   {/* Send Area */}
                   <div className='send-area'>
                   <div className='send-btn'> 
-                  <div className='send-options'>
-                  <ul className='options' style={{display: options ? 'block':'none' }}>
+                  <div>
+                  <div className='send-options' style={{display: options ? 'block':'none' }}>
+                  <ul className='options' >
                     <li onClick={sendSms}> Send </li>
                     <li onClick={setScheduleModel}>Send later</li>
                   </ul>
                   </div>
-                  <div className='btn1' onClick={sendSms}><label>Send</label> </div>
+                  </div>
+                  <div className='btn1' onClick={sendSms}>
+                    <label style={{display: mutationLoading ? 'none': 'block'}}>Send</label> 
+                    {mutationLoading &&   <div class="d-flex justify-content-center">
+     <div class="spinner-border m-10 mx-spinner" role="status" id="spinner" ><span class="sr-only">Loading...</span></div>
+        </div>}
+       
+                  </div>
                   <div className='seperator'></div>
-                  <div className='btn2'  id='btnOptions' onClick={() => setOption(!options)}><i className='fa fa-angle-up'></i></div>
+                  <div className='btn2'  id='btnOptions' onClick={(e) => {
+                    e.stopPropagation()
+                    dispatch(toggleOptions())
+                   
+                  }}><i className='fa fa-angle-up'></i></div>
                   </div>
                     <div className='char'>Character: <span>{counter}</span></div> 
                 </div>
       
                 </div>
-                       {/* Preview */}
-              
-    {/* <div id="wrapper" style={{perspective: "1300px"}}>
-    <div className="phone view_2" id="phone_1" >
-      <iframe src="http://designhooks.com" id="frame_1"></iframe>
-    </div>
-    </div> */}
-                <Modal
-          className="modal-mini modal-primary"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          show={false}
-          >
-          <Modal.Header className="justify-content-center">
-          <div className="modal-profile">
-          <i className="nc-icon nc-circle-09"></i>
-          </div>
-          </Modal.Header>
-          <Modal.Body>
-          {/* <p>Always have an access to your profile</p> */}
-          <Container fluid>
-          <Row>
-          <Col md="12">
-          <Card>
-          <Card.Header>
-            <Card.Title as="h4">100 Contacts Found</Card.Title>
-            <p className="card-category">
-              Select the list of contacts and click Insert
-            </p>
-          </Card.Header>
-          <Card.Body className="all-icons">
-            <Row>
-              <Col className="font-icon-list" lg="2" md="3" sm="4" xs="6" >
-              <div className="font-icon-detail">
-              <div className='tick'>
-              <i className='fa fa-check'></i>
-              </div>
-                <i className="nc-icon nc-air-baloon"></i>
-                <p>Wedding</p>
-              </div>
-            </Col>
-            </Row>
-          </Card.Body>
-          </Card>
-          </Col>
-          </Row>
-          </Container>
-          </Modal.Body>
-          <div className="modal-footer">
-          <div className='send-btn'> 
-              <div className='btn1'><i className='fa fa-check'></i> </div>
-              <div className='seperator'></div>
-              <div className='btn2' ><i className='fa fa-times'></i></div>
-              </div>
-          </div>
-          </Modal>
+
         <Modal
           className=" modal-primary"
           show={scheduleModal}
@@ -210,7 +181,12 @@ if(mutationError){
           </Modal.Body>
           <div className="modal-footer">
           <div className='send-btn'> 
-                  <div className='btn1'  onClick={sendLater}><label>Send</label></div>
+                  <div className='btn1'  onClick={sendLater}>
+                  <label style={{display: mutationLoading ? 'none': 'block'}}>Send</label> 
+                    {mutationLoading &&   <div class="d-flex justify-content-center">
+     <div class="spinner-border m-10 mx-spinner" role="status" id="spinner" ><span class="sr-only">Loading...</span></div>
+        </div>}
+                    </div>
                   <div className='seperator'></div>
                   <div className='btn2' onClick={() => setScheduleModel(!scheduleModal)}><i className='fa fa-times'></i></div>
                   </div>

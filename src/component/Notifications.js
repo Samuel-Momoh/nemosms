@@ -2,20 +2,13 @@ import React from "react";
 // react plugin for creating notifications over the dashboard
 import NotificationAlert from "react-notification-alert";
 // react-bootstrap components
-import {
-  Alert,
-  Card,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import {Alert,Card,Container,Row,Col,} from "react-bootstrap";
 import { useQuery} from '@apollo/client';
 import {useHistory} from "react-router-dom";
 import { NOTIFICATIONS} from "../queries";
 
 function Notifications() {
   const history = useHistory()
-  const [showModal, setShowModal] = React.useState(false);
   const notificationAlertRef = React.useRef(null);
   const { loading: queryLoading, error: queryError, data: queryData,} = useQuery(NOTIFICATIONS);
   if(queryData){
@@ -25,37 +18,24 @@ function Notifications() {
   }
   if(queryLoading){
     return(
-      <p>loading.........</p>
+      <>
+<Container fluid className="inapp-preloader-body">
+      <div className="inapp-preloader-container">
+      <div class="loadingio-spinner-ellipsis-k08wjsja6k"><div class="ldio-z383kca01p">
+<div></div><div></div><div></div><div></div><div></div>
+</div></div>
+    </div>
+</Container>
+</>
     )
   }
   if(queryError){
  history.push('/auth/signin')
   }
-  const notify = (place) => {
-    var color = Math.floor(Math.random() * 5 + 1);
-    var type;
-    switch (color) {
-      case 1:
-        type = "primary";
-        break;
-      case 2:
-        type = "success";
-        break;
-      case 3:
-        type = "danger";
-        break;
-      case 4:
-        type = "warning";
-        break;
-      case 5:
-        type = "info";
-        break;
-      default:
-        break;
-    }
+  const notify = () => {
     var options = {};
     options = {
-      place: place,
+      place: 'br',
       message: (
         <div>
           <div>
@@ -64,9 +44,9 @@ function Notifications() {
           </div>
         </div>
       ),
-      type: type,
+      type: "primary",
       icon: "nc-icon nc-bell-55",
-      autoDismiss: 7,
+      autoDismiss: 10,
     };
     notificationAlertRef.current.notificationAlert(options);
   };
@@ -79,7 +59,7 @@ function Notifications() {
       <Container fluid>
         <Card>
           <Card.Header>
-            <Card.Title as="h4">Notifications</Card.Title>
+            {/* <Card.Title as="h4">Notifications</Card.Title> */}
           </Card.Header>
           <Card.Body>
             <Row>
@@ -95,6 +75,7 @@ function Notifications() {
                           className="close"
                           data-dismiss="alert"
                           type="button"
+                          onClick={()=>notify( )}
                         >
                           <i className="nc-icon nc-simple-remove"></i>
                         </button>

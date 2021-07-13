@@ -2,6 +2,7 @@
 import './App.css';
 import './component/stylesheet/right.css'
 import React from 'react';
+import { useDispatch } from "react-redux";
 import Left from "./component/left";
 import FooterNav from "./component/footerNav";
 import Pop from "./component/pop";
@@ -10,7 +11,6 @@ import './fontawesome/css/all.css';
 import {
   Switch,
   Route,
-  Redirect,
   useHistory
 } from "react-router-dom";
 import { useQuery,useMutation} from '@apollo/client';
@@ -18,12 +18,15 @@ import { Container } from 'react-bootstrap';
 import Header from './component/header'
 import routes from "./routes.js";
 import { REFRESH,LOGOUT } from "./queries";
+import { restoreOptions,restorepopMenue } from "./actions";
 
 
 
 
-const App =() =>  {
+const App =(props) =>  {
+  console.log(props.location.pathname)
   const history = useHistory()
+  const dispatch = useDispatch()
   const [LogOut, { result }] = useMutation(LOGOUT);
   const { loading, error, data, startPolling} = useQuery(REFRESH);
   if(data){
@@ -34,7 +37,16 @@ const App =() =>  {
   }
   if(loading){
     return(
-      <p>loading.........</p>
+<>
+<Container fluid className="preloader-body" style={{display: props.location.pathname=="/admin/dashboard"? null:"none"}}>
+        <div className="preloader-container">
+      <div class="loadingio-spinner-radio-kuvjpq91m2"><div class="ldio-bckhx28ae65">
+      <div></div><div></div><div></div>
+      </div></div>
+      <p>Nemotel</p>
+      </div>
+</Container>
+</>
     )
   }
   if(error){
@@ -62,7 +74,16 @@ const App =() =>  {
     });
   };
     return ( 
-<div className='body-container'>
+<>
+
+
+
+<div className='body-container' onClick={(e) => {
+         
+         dispatch(restoreOptions())
+         dispatch(restorepopMenue())
+     }
+       }>
 
 <Left routes={routes}/>
 <div className='right-container'>
@@ -73,7 +94,7 @@ const App =() =>  {
 {/* Body */}
 <Container fluid className='scroll-margin'>
 
-<Container fluid className='right-body'>
+<Container fluid className='right-body' style={{paddingLeft: 0,paddingRight: 0}}>
 
 <Switch>{getRoutes(routes)}</Switch>
 </Container>
@@ -85,6 +106,8 @@ const App =() =>  {
 <Pop routes={routes}/>
 <FooterNav routes={routes}/>
 </div>
+
+</>
       )
   
 }

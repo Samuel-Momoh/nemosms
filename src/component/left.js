@@ -1,5 +1,6 @@
 import React from 'react';
 import './stylesheet/left.css'
+// import MaterialIcon from 'material-icons-react';
 import {
   Link,
   NavLink
@@ -9,7 +10,6 @@ function Left({ routes }) {
     
             <div className='left'>
             <ul className='left-icons'>
-              
             {routes.slice(0,6).map((prop, key) => {
             if (!prop.redirect)
               return (
@@ -18,7 +18,6 @@ function Left({ routes }) {
                     to={prop.layout + prop.path}
                     activeClassName="selected"
                     key={key}
-                   
                   >
                     <i className={prop.icon} />
                   </NavLink>
@@ -38,6 +37,7 @@ function Left({ routes }) {
                     activeClassName="selected"
                     key={key}
                   >
+                      <i className='fa fa-lock' style={{position:"absolute",left: "50%", top: "-8px", transform: 'translateX(-50%)', fontSize: "12px", display: prop.layout + prop.path=="/admin/notifications"? null: 'none'}}/>
                     <i className={prop.icon} />
                   </NavLink>
                 </li>

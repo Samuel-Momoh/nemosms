@@ -18,3 +18,23 @@ export const loginUser = (value) => {
         playload: value
     };
 };
+export const toggleOptions = () => {
+    return{
+        type: 'TOGGLE',
+    };
+};
+export const restoreOptions = () => {
+    return{
+        type: 'RESTORE',
+    };
+};
+export const togglepopMenue = () => {
+    return{
+        type: 'TOGGLE',
+    };
+};
+export const restorepopMenue = () => {
+    return{
+        type: 'RESTORE',
+    };
+};

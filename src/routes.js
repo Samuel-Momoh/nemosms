@@ -72,7 +72,7 @@ const dashboardRoutes = [
   {
     path: "/notifications",
     name: "Notifications",
-    icon: "fa fa-bell",
+    icon: "fa fa-phone",
     component: Notifications,
     layout: "/admin",
   },

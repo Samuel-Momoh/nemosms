@@ -124,3 +124,29 @@ mutation createPayment($paymentid: String!, $channel: String!, $name: String!, $
     status
   }
 }`
+export const NEW_CONTACT = gql`
+mutation createContact($name: String!, $number: String!){
+  createContact(name: $name, number: $number){
+    id
+    name
+    number
+  }
+} 
+`
+export const CONTACTS = gql`
+query{
+  contacts{
+    edges{
+      id
+      name
+      number
+      createdAt
+    }
+  }
+}
+`
+export const DELETE_CONTACT = gql`
+mutation deleteContact($id: ID!){
+    deleteContact(id: $id)
+}
+` 

@@ -1,0 +1,22 @@
+.delivery_report{
+   
+}
+/* #FF9590  */
+.delivery_report .rt-thead{
+   background: #63d8f1 !important;
+   color: #fff !important;
+}
+.delivery_report .pagination-bottom{
+    background: #63d8f1 !important;
+    color: #fff !important;
+ }
+ .delivery_report .-pagination .-btn{
+    background: #FF9500 !important;
+    color: #fff !important;
+ }
+ .delivery_report .-pagination .-btn:hover{
+    background: #FF9553 !important;
+ }
+ .ReactTable .rt-tbody .rt-tr-group {
+    color: #347 !important;
+}

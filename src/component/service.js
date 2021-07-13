@@ -36,7 +36,7 @@ class Service extends React.Component {
                       <Col xs="7">
                         <div className="numbers">
                           <p className="card-category">SMPP Account</p>
-                          <Card.Title as="h4">$ 1,345</Card.Title>
+                          <Card.Title as="h4">₦ 1,345</Card.Title>
                         </div>
                       </Col>
                     </Row>
@@ -62,7 +62,7 @@ class Service extends React.Component {
                       <Col xs="7">
                         <div className="numbers">
                           <p className="card-category">Long Number</p>
-                          <Card.Title as="h4">$ 1,345</Card.Title>
+                          <Card.Title as="h4">₦ 1,345</Card.Title>
                         </div>
                       </Col>
                     </Row>
@@ -88,7 +88,7 @@ class Service extends React.Component {
                       <Col xs="7">
                         <div className="numbers">
                           <p className="card-category">Short Number</p>
-                          <Card.Title as="h4">$ 1,345</Card.Title>
+                          <Card.Title as="h4">₦ 1,345</Card.Title>
                         </div>
                       </Col>
                     </Row>
@@ -114,7 +114,7 @@ class Service extends React.Component {
                       <Col xs="7">
                         <div className="numbers">
                           <p className="card-category">USSD</p>
-                          <Card.Title as="h4">$ 1,345</Card.Title>
+                          <Card.Title as="h4">₦ 1,345</Card.Title>
                         </div>
                       </Col>
                     </Row>

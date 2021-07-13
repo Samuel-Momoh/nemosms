@@ -4,12 +4,7 @@ import ChartistGraph from "react-chartist";
 // import {  useQuery } from '@apollo/client';
 import {Link} from "react-router-dom";
 // react-bootstrap components
-import {
-  Card,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import {Card,Container,Row,Col,} from "react-bootstrap";
 function Dashboard() {
 
   return (
@@ -38,7 +33,7 @@ function Dashboard() {
                 <Link to="/admin/pay">
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  Update Now
+                  Top-up Now
                 </div>
                 </Link>
               </Card.Footer>
@@ -56,7 +51,7 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Revenue</p>
-                      <Card.Title as="h4">$ 1,345</Card.Title>
+                      <Card.Title as="h4">₦ 1,345</Card.Title>
                     </div>
                   </Col>
                 </Row>

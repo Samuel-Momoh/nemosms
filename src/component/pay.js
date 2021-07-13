@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import "./stylesheet/pay.css"
-import {Alert,Card,Container,Row,Col,} from "react-bootstrap";
+import {Container,ProgressBar} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import { useQuery, useMutation} from '@apollo/client';
 import RemitaPayment from "react-remita";
 import { InterswitchPay } from 'react-interswitch'
 import { userDetail,SAVE_PAYMENT } from "../queries";
 import {priceList} from './prices'
+import accepted from  '../img/accepted_card2.jpeg'
 const axios = require('axios');
 
   function Pay() {
@@ -21,13 +22,22 @@ const [SavePayment,{ loading: mutationLoading, error: mutationError,data: mutati
 const [prices, selectPrice] = useState({priceList:priceList});
 
 const [due, setTotal] = useState({total: 0})
+const[bottomModal,setBottomModal] = useState([false])
 
 if(queryData){
   console.log(queryData.user.email)
 }
 if(queryLoading){
   return(
-    <p>loading.....</p>
+    <>
+<Container fluid className="inapp-preloader-body">
+      <div className="inapp-preloader-container">
+      <div class="loadingio-spinner-ellipsis-k08wjsja6k"><div class="ldio-z383kca01p">
+<div></div><div></div><div></div><div></div><div></div>
+</div></div>
+    </div>
+</Container>
+</>
   )
 }
 if(queryError){
@@ -68,17 +78,11 @@ let paymentres = {
       customerID: queryData.user.username,
       customerEmail: queryData.user.email,
       redirectURL: 'http://localhost:3000/admin/pay',
-      text: 'Pay With Quickteller',
+      text: 'Quickteller',
       mode: 'TEST',
       transactionReference: Date.now().toString(),
       amount: (due.total * 100).toString(),
-      style: {
-          width: '200px',
-          height: '40px',
-          border: 'none',
-          color: '#fff',
-          backgroundColor: '#ff0000'
-      },
+      className:'btn quikteller',
       callback: (response) => {
         SavePayment({ variables: {paymentid: response.txnref.toString(), channel: "Quickteller", name: queryData.user.name, email: queryData.user.email, amount: response.apprAmt.toString(), naration: "Account Topup",status: "paid"}})
       }
@@ -97,99 +101,161 @@ let paymentres = {
       })})
 
     }
-
+var stepOne= true;
+var stepTwo= false;
+var stepThree= false;
     return (
       <>
         <Container fluid>
-          <Row>
-            <Col md="12">
-              <Card>
-                <Card.Header>
-                  <Card.Title as="h4">Fund Account</Card.Title>
-                </Card.Header>
-                <Card.Body>
-                <Alert className="alert-with-icon" variant="info">
-                        <span>
-                       This details are generate from your user acoount, Feel free to edit to prefered Choice.
-                       </span>
-                       <span>
-                       Note: Details are What will apppear on the reciept after payment
-                        </span>
-                      </Alert>
-                    <Row>
-                      <Col className="pr-1" md="5">
-                          <label>First Name</label>
-                        <input type="text" value={queryData.user.name.split(' ')[0]} />
-
-                      </Col>
-                      <Col className="px-1" md="3">
-
-                          <label>Last Name</label>
-                          <input type="text" value={queryData.user.name.split(' ')[1]} />
-                      </Col>
-                      <Col className="pl-1" md="4">
-
-                          <label htmlFor="exampleInputEmail1">
-                            Email address
-                          </label>
-                          <input type="text" value={queryData.user.email} />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md="12">
-
-                          <label>Select Amount</label>
-                          <Alert className="alert-with-icon" variant="info">
-                      
-                        <span>  Kindly Select the amount of credit you desire, multiple selection is possible</span>
-              <br/>
-              <span>  Note: </span>
-              <span>   i. The highest cummulative amount that is payable via this channel is $131800 </span>
-              <span> ii. For payment with Visa Card Please Select Remita</span>
-                      
-                      </Alert>
-                          <Row>
-                          {prices.priceList.map((price, key) => {
+          <p className="payment-notice">You Order will be processed after the payment has been confirmed</p>
+          {/* USER Information */}
+          <div className="payment-title"> User Information</div>
+          <div className="payment-caps">
+            {/* Caps-details One */}
+            <div className="caps-details">
+            <p className="caps-text-title"> FirstName</p>
+            <p className="caps-text"> {queryData.user.name.split(' ')[0]}</p>
+            </div>
+              {/* Caps-details Two */}
+              <div className="caps-details">
+            <p className="caps-text-title"> LastName</p>
+            <p className="caps-text"> {queryData.user.name.split(' ')[1]}</p>
+            </div>
+          </div>
+          {/* SELECT AMOUNT */}
+          <div className="payment-title"> Top-up Amount</div>
+          {/* <p className="payment-notice">Select Your Desire Top-up Amount From The Price List </p> */}
+          <div className="payment-caps">
+            <div className="price-list">
+          {prices.priceList.map((price, key) => {
                             return(
-                         <Col lg="2" md="3" sm="4" xs="6">
-                         <div className="btn pricing" style={{background: price.select? "#0078d4": "#fff",color: price.select? "#fff": "#0078d4" }} key={key} onClick={()=>Check(price.id)}>${price.amount} Credit</div>
-                         </Col>
+                         <div className="btn pricing" style={{background: price.select? "#0078d4": "#fff",color: price.select? "#fff": "#0078d4" }} key={key} onClick={()=>Check(price.id)}>₦{price.amount}</div>
                             );
                       })}
-                       </Row>
-<Row>
-  <Col md="4">Total: {due.total}</Col>
-</Row>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md="12">
-
-                          <label>Make Payment With: </label>
-                          <Row>
-                         <Col lg="2" md="3" sm="4" xs="6">
-                         <RemitaPayment
+                      </div>
+          </div>
+                            {/* Order Summary */}
+          <div className="payment-title"> Order Summary</div>
+          <div className="payment-caps">
+            {/* Caps-details One */}
+            <div className="caps-details">
+            <p className="caps-text-title"> Service Price</p>
+            <p className="caps-text">₦ {due.total}</p>
+            </div>
+                        {/* Caps-details Two */}
+                        <div className="caps-details">
+            <p className="caps-text-title"> Sms Unit</p>
+            <p className="caps-text"> {due.total / 2}</p>
+            </div>
+                            {/* Caps-details Three */}
+            <div className="caps-details">
+            <p className="caps-text-title"> Nemotel Discount</p>
+            <p className="caps-text"> ₦ 0.00</p>
+            </div>
+                          { /* Caps-details Four */}
+            <div className="caps-details">
+            <p className="caps-text-title"> Nemotel Service Fee</p>
+            <p className="caps-text"> ₦ 0.00</p>
+            </div>
+            { /* Caps-details Five */}
+            <div className="caps-details">
+            <p className="caps-text-title"> Amount Due</p>
+            <p className="caps-text"> ₦ {due.total}</p>
+            </div>
+          </div>
+                    {/* Checkout Method */}
+          <div className="payment-title"> Checkout Method</div>
+          <div className="payment-caps">
+            <img src={accepted} alt="nemotel accepted cards" className="img-fluid accepted-img"/>
+            <div className="checkout">
+                <div className="method">
+                <RemitaPayment
                           remitaData={paymentres}
-                          className='btn' // class to style the button
-                          text='Pay with Remita' //text to show on button
+                          className='btn remita' // class to style the button
+                          text='Remita' //text to show on button
                           // add a 'live' prop to use the live urls/keys
-                         />
-                         </Col>
-                         <Col lg="2" md="3" sm="4" xs="6">
-                         <InterswitchPay {...paymentParameters} />
-                         </Col>
-                       </Row>
-
-                      </Col>
-                    </Row>
-
-                </Card.Body>
-              </Card>
-            </Col>
-            
-          </Row>
-
+                  />
+                </div>
+                <div className="method">
+                <InterswitchPay {...paymentParameters} />
+                </div>
+            </div>
+          </div>
+          
         </Container>
+        <div className="bottom-modal " 
+        style={{display: 'none'}}
+         style={{display: bottomModal ? "none":null}} 
+onClick={()=>{
+  setBottomModal(!bottomModal)
+}}
+>
+<div className="bottom-modal-container"
+onClick={(e)=>{
+  e.stopPropagation();
+}}
+>
+<div className="bottom-modal-top">
+Please Wait
+</div>
+<div className="bottom-modal-body">
+<div className="bottom-modal-payment-content">
+  
+<div className="order-progress-container">
+  
+<ProgressBar now={50} style={{height: '4px'}} className="step-progress-bar" />
+
+< div className="step-container">
+
+{/* Order Step One */}
+<div className="step-tag">
+<div className="order-step">
+
+<div className="waiting-preloader" style={{display: stepOne? null:"none"}}>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+</div>
+<i className="fa fa-check" style={{display: stepOne? "none":null}}></i>
+</div>
+<label>Paid</label>
+</div>
+{/* Order Step One */}
+<div className="step-tag">
+<div className="order-step">
+<div className="waiting-preloader" style={{display: stepTwo? null:"none"}}>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+</div>
+<i className="fa fa-check" style={{display: stepTwo? "none":null}}></i>
+</div>
+<label>Confirmed</label>
+</div>
+{/* Order Step One */}
+<div className="step-tag">
+<div className="order-step">
+<div className="waiting-preloader" style={{display: stepThree? null:"none"}}>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+<div  className="waiting-item"></div>
+</div>
+<i className="fa fa-check" style={{display: stepThree? "none":null}}></i>
+</div>
+<label>Completed</label>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
       </>
     );
   }

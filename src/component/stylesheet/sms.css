@@ -39,6 +39,8 @@
     font-weight: 400;
     height: 100%;
     width: calc(100% - 120px);
+    display: flex;
+    flex-direction: row;
 }
 .recipient .num-group input{
     padding:10px 5px 10px 5px;
@@ -46,7 +48,6 @@
     width: 100%;
     outline: transparent;
 }
-
 .recipient .tag{
     padding: .2rem 1rem;
     border: 1px solid #0078d4;
@@ -60,6 +61,22 @@
 }
 
 .recipient .tag:hover{
+    background: #0078d4;
+}
+
+.sender .tag{
+    padding: .2rem 1rem;
+    border: 1px solid #0078d4;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    background:  #106ebe;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.sender .tag:hover{
     background: #0078d4;
 }
 

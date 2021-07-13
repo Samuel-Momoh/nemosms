@@ -35,8 +35,9 @@ const Header =(props)=> {
                   <Row>
                         <Col xl={4} xs={4} sm={4} md={4} lg={4} className="header-icons"> 
                             <Row>
-                                <Col xl={2} xs={2} sm={2} md={2} lg={2}>
-                                <i className="far fa-bell text-warning"></i>
+                                <Col xl={2} xs={2} sm={2} md={2} lg={2} style={{position: 'relative'}}>
+                                <p className=" text-warning new-notification-count">8</p>
+                                <i className="far fa-bell text-warning base"></i>
                                 </Col> 
                             </Row>
                         </Col> 

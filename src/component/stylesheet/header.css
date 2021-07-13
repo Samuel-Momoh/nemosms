@@ -19,11 +19,20 @@
 .base{
     position: relative;
 }
+
 .tip{
     position: absolute;
     left: 23px;
     top: 11px;
     font-size: 10px;
+}
+.new-notification-count{
+    position: absolute;
+    top: -8px;
+    left: 95%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    padding-left: 10px;
 }
 #header-title{
 color: #a9a9a9;

@@ -1,31 +1,50 @@
-
+import { useState } from "react"; 
 // react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Form,
-  Navbar,
-  Nav,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
-import {
-  useHistory
-} from "react-router-dom";
+import {Button,Card,Form,Container,Row,Col,} from "react-bootstrap";
+import './stylesheet/userdetails.css';
+import {useHistory} from "react-router-dom";
 import { useQuery} from '@apollo/client';
 import { userDetail } from "../queries";
-
+import Switch from 'react-bootstrap-switch';
+import bg from '../img/banner-bg01.png';
+import userImage from '../img/images.jpeg';
+import {smsType} from './prices'
 function User() {
   const history = useHistory();
   const { loading, error, data } = useQuery(userDetail);
+  const[bottomModal,setBottomModal] = useState([false])
+  var accountSwitch =(el, state) => {
+    console.log("accountSwitch. elem:", el);
+    console.log("name", el.props.name);
+    console.log("new State:", state);
+  }
+  const [type, selectType] = useState({smsType:smsType});
+  const Check = (id) =>{
+    selectType({ smsType: type.smsType.map(type => {
+
+      if(type.id == id){
+        type.select = !type.select
+      }else{
+        type.select = false
+      }
+      return type;
+    })})
+
+  }
   if(data){
-    console.log(data.user.email)
+    console.log(data.user)
   }
   if(loading){
     return(
-      <p>loading.....</p>
+      <>
+<Container fluid className="inapp-preloader-body">
+      <div className="inapp-preloader-container">
+      <div class="loadingio-spinner-ellipsis-k08wjsja6k"><div class="ldio-z383kca01p">
+<div></div><div></div><div></div><div></div><div></div>
+</div></div>
+    </div>
+</Container>
+</>
     )
   }
   if(error){
@@ -38,16 +57,15 @@ function User() {
           <Col md="8">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Edit Profile</Card.Title>
               </Card.Header>
               <Card.Body>
                 <Form>
                   <Row>
                     <Col className="pr-1" md="5">
                       <Form.Group>
-                        <label>Company (disabled)</label>
+                        <label>Username</label>
                         <Form.Control
-                          defaultValue="Creative Code Inc."
+                          defaultValue={data.user.username}
                           disabled
                           placeholder="Company"
                           type="text"
@@ -56,9 +74,9 @@ function User() {
                     </Col>
                     <Col className="px-1" md="3">
                       <Form.Group>
-                        <label>Username</label>
+                        <label>Phone Number</label>
                         <Form.Control
-                          defaultValue="michael23"
+                          defaultValue="08067103944"
                           placeholder="Username"
                           type="text"
                         ></Form.Control>
@@ -71,6 +89,8 @@ function User() {
                         </label>
                         <Form.Control
                           placeholder="Email"
+                          defaultValue={data.user.email}
+                          disabled
                           type="email"
                         ></Form.Control>
                       </Form.Group>
@@ -81,7 +101,7 @@ function User() {
                       <Form.Group>
                         <label>First Name</label>
                         <Form.Control
-                          defaultValue="Mike"
+                          defaultValue={data.user.name.split(' ')[0]}
                           placeholder="Company"
                           type="text"
                         ></Form.Control>
@@ -91,20 +111,8 @@ function User() {
                       <Form.Group>
                         <label>Last Name</label>
                         <Form.Control
-                          defaultValue="Andrew"
+                          defaultValue={data.user.name.split(' ')[1]}
                           placeholder="Last Name"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <label>Address</label>
-                        <Form.Control
-                          defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          placeholder="Home Address"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -141,28 +149,51 @@ function User() {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row>
+                   <Row>
                     <Col md="12">
-                      <Form.Group>
-                        <label>About Me</label>
-                        <Form.Control
-                          cols="80"
-                          defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                          that two seat Lambo."
-                          placeholder="Here can be your description"
-                          rows="4"
-                          as="textarea"
-                        ></Form.Control>
-                      </Form.Group>
+                    <label>Account Setting</label>
+                    <Row>
+                    {type.smsType.map((type, key) => {
+                            return(
+                         <Col className="pr-1" md="3">
+                         <Form.Group>
+                           <label>{type.groupId}</label>
+                           <Form.Control
+                           onClick={()=>Check(type.id)}
+                             defaultValue="Mike"
+                             placeholder="City"
+                             type="checkbox"
+                             key={key}
+                             checked={type.select? true:false}
+                             className="account-settings-check"
+                           ></Form.Control>
+                         </Form.Group>
+                       </Col>
+                            );
+                      })}
+                      
+                    </Row>
                     </Col>
                   </Row>
+
+                
+                  <div className="button-container mr-auto ml-auto">
                   <Button
-                    className="btn-fill pull-right"
+                    className="btn recharge"
                     type="submit"
                     variant="info"
                   >
                     Update Profile
+               {/*<div class="d-flex justify-content-center">
+      {mutationLoading &&  <div class="spinner-border m-10 mx-spinner" role="status" id="spinner" ><span class="sr-only">Loading...</span></div>} 
+     <div class="spinner-border m-10 mx-spinner" role="status" id="spinner" ><span class="sr-only">Loading...</span></div>
+        </div>
+        */}
                   </Button>
+              <div className="btn recharge" onClick={()=>{
+                setBottomModal(!bottomModal)
+              }}>Change Password</div>
+              </div>
                   <div className="clearfix"></div>
                 </Form>
               </Card.Body>
@@ -173,10 +204,7 @@ function User() {
               <div className="card-image">
                 <img
                   alt="..."
-                  // src={
-                  //   require("assets/img/photo-1431578500526-4d9613015464.jpeg")
-                  //     .default
-                  // }
+                  src={bg}
                 ></img>
               </div>
               <Card.Body>
@@ -185,49 +213,97 @@ function User() {
                     <img
                       alt="..."
                       className="avatar border-gray"
-                      // src={require("assets/img/faces/face-3.jpg").default}
+                      src={userImage}
                     ></img>
-                    <h5 className="title">{data.user.username}</h5>
                   </a>
-                  <p className="description">{data.user.email}</p>
+                  <p className="description">{data.user.name}</p>
                 </div>
-                <p className="description text-center">
-                  "Lamborghini Mercy <br></br>
-                  Your chick she so thirsty <br></br>
-                  I'm in that two seat Lambo"
-                </p>
+                    <div className="user-caps">
+                    {/* Caps-details One */}
+                    <div className="caps-details">
+                    <p className="caps-text-title"> Balance</p>
+                    <p className="caps-texts"> 300</p>
+                    </div>
+                    {/* Caps-details Three */}
+                    <div className="caps-details">
+                    <p className="caps-text-title"> Username</p>
+                    <p className="caps-texts "> u9yyi8</p>
+                    </div>
+                      {/* Caps-details Two */}
+                      <div className="caps-details">
+                    <p className="caps-text-title"> Status</p>
+                    <p className="caps-texts "> <Switch name="acct-status" onText="Active" offText="Inactive" value={true} /></p>
+                    </div>
+
+                    {/* Caps-details Form */}
+                    <div className="caps-details">
+                    <p className="caps-text-title"> API Status</p>
+                    <p className="caps-texts "> <Switch onChange={(el, state) => accountSwitch(el, state)} name="acct-type" onText="Live" offText="Test" defaultValue={true} /> </p>
+                    </div>
+                  </div>
+                <div className='dev-auth'>
+                <h1>Public Key</h1>
+                <div className='key-details'> 
+                <div className='key'>1bb328b6a02a7242f0fef6e75bee513d-3f413a9c-0b2c-4761-8654-e3cd83746025</div>
+                <span className="holder">
+                  <span className="copy-text">
+                    copied
+                  </span>
+                  <i className='fa fa-copy'></i>
+                  </span>
+                </div>
+            </div>
               </Card.Body>
-              <hr></hr>
               <div className="button-container mr-auto ml-auto">
-                <Button
-                  className="btn-simple btn-icon"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  variant="link"
-                >
-                  <i className="fab fa-facebook-square"></i>
-                </Button>
-                <Button
-                  className="btn-simple btn-icon"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  variant="link"
-                >
-                  <i className="fab fa-twitter"></i>
-                </Button>
-                <Button
-                  className="btn-simple btn-icon"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  variant="link"
-                >
-                  <i className="fab fa-google-plus-square"></i>
-                </Button>
+              <div className="btn recharge"> Recharge Now </div>
               </div>
             </Card>
           </Col>
         </Row>
       </Container>
+<div className="bottom-modal" style={{display: bottomModal ? "none":null}} 
+onClick={()=>{
+  setBottomModal(!bottomModal)
+}}
+>
+<div className="bottom-modal-container"
+onClick={(e)=>{
+  e.stopPropagation();
+}}
+>
+<div className="bottom-modal-top">
+Password Update
+</div>
+<div className="bottom-modal-body">
+<div className="bottom-modal-content">
+<form className="bottom-modal-form">
+
+  <div className="bottom-input-item">
+    <input type="text" placeholder="Enter New Password"/>
+  </div>
+
+  <div className="bottom-input-item">
+    <input type="text"  placeholder="Confirm New Password"/>
+  </div>
+
+  <Button
+    className="btn pwd-upd"
+    type="submit"
+    variant="info"
+    >
+    Update Password
+    {/*<div class="d-flex justify-content-center">
+      {mutationLoading &&  <div class="spinner-border m-10 mx-spinner" role="status" id="spinner" ><span class="sr-only">Loading...</span></div>} 
+     <div class="spinner-border m-10 mx-spinner" role="status" id="spinner" ><span class="sr-only">Loading...</span></div>
+        </div>
+        */}
+  </Button>
+
+</form>
+</div>
+</div>
+</div>
+</div>
     </>
   );
 }
